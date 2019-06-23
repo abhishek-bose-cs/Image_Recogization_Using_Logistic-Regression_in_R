@@ -1,0 +1,67 @@
+---
+output: 
+  pdf_document:
+    number_sections: no
+    toc: yes
+    citation_package: natbib
+    keep_tex: true
+    fig_caption: true
+    latex_engine: pdflatex
+    
+title: |
+    | ASSIGNMENT 1: LOGISTIC REGRESSION 
+    | 
+    | ABHISHEK BOSE
+author: "Instructor: Marco Montes De Oca"
+abstract: "The aim of this assignment is to illustrate the concept of Logistic Regression.We have been given a set of image to perform the classification using logistic Regression."
+keywords: "pandoc, r markdown, knitr"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+geometry: margin=1in
+fontfamily: mathpazo
+fontsize: 25pt
+---
+
+\pagebreak
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(basicTrendline)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+**Logistic Regression** Logistic Regression is used to solve the problem of classification. The main purpose behind logistic Regression is it gives the probability of y being belong to a particular class. Which is diddicult to acheive using linear regression since we would like to obatain the probability if the data belongs to a class or not. The **sigmoid function** is used in order to have a probabilistic value between 0 to 1 rather than keeping a value between negetive infinity to positive infinity and is used to represent the odds, the logistic function is represent as:
+
+$$h_\theta(x) = \frac {1}{1+e^{-\theta^T.X}}$$
+Assuming that if we have m training examples we can write the likelihood of the parameters as:
+
+$$L(\theta)=\prod_{i=1}^m (h_\theta(x^{(i)}))^{y^{(i)}}(1-h_\theta(x^{(i)}))^{1-y^{(i)}}$$
+which is the costfunction of logistic regression but unlike linear regression we would like to maximize after we take take log on both sides:
+
+$$l(\theta)=\sum_{i=1}^m {y^{(i)}log(h_\theta(x^{(i)}))}+{1-y^{(i)}log(1-h_\theta(x^{(i)}))}$$
+The above function is our link function.
+
+Our objective is to maximize the above function by applying gardient descent to obtain the parameter as discussed in last assignment.  
+
+# Analysis:
+
+* We are a set a of images in form of gray scale images for which we need to implement a logistic regression.
+
+* We have implemented the code in R in order to generate an confusion matrix.
+
+![Confusion Matrix]("/Users/abhishek/Downloads/screen")
+
+**Accuracy Obtained**: 73.75%
+
+## Observation:
+
+* Initially we have created a sample taking all the positive data for a given label and diviving the remaining sample among the other label for which we get an accuracy of **68%**. the reason being of high biased data and a a result it misclassfied between 0,7 and 9. The reson is we dont have enough information about 7 and 9 while we run the traing model for label 1 classification.
+
+* We try to improve our accuracy taking random sample from the data set here we have alomost equal number of records for each label. So the model has equal weightage for classifing positive and negetive sample. Problem happens if we give particular weightage for a single label it will train itself perfectly for that label but for the remaining label it will be inefficiently train now if a certain number for example 7 comes up for classification model 1 it might have maximum characterstics which is similar to 1 and our algorithm is taking highest probability among the 10 iteration hence it will predict 7 as 1 since it don't have enough information for 7 in training model 1 to classifiy it as 0. 
+
+
+
+
+
